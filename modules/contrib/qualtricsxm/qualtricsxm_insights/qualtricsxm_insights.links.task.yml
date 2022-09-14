@@ -1,0 +1,4 @@
+qualtricsxm_insights.overview:
+  route_name: qualtricsxm_insights.overview
+  base_route: qualtricsxm.config_settings
+  title: 'Insights'

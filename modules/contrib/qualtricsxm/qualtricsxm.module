@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * @file
+ * Main module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function qualtricsxm_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+
+    case "help.page.qualtricsxm":
+      $output = t("The Qualtricsxm module render a Qualtrics form page by Qualtric form ID, it also provides a simple qualtric API dependency functions.");
+      return $output;
+  }
+}
+
+/**
+ * Create a qualtricsxm class can be accessible.
+ *
+ * @return \Drupal\qualtricsxm\Qualtricsxm
+ */
+function qualtricsxm_static() {
+  return \Drupal::service('qualtricsxm.qualtricsxm');
+}
+
+/**
+ * Helper function get conf settings of width and height.
+ */
+function qualtricsxm_get_config_width_height() {
+  $settings = \Drupal::config('qualtricsxm.settings');
+  $qualtricsxm_embed_width = $settings->get('qualtricsxm_embed_width');
+  $qualtricsxm_embed_height = $settings->get('qualtricsxm_embed_height');
+
+  return [
+    'width' => $qualtricsxm_embed_width ? $qualtricsxm_embed_width : '100%',
+    'height' => $qualtricsxm_embed_height ? $qualtricsxm_embed_height : '900',
+  ];
+
+}
+
+/**
+ * Helper function get accessible base url.
+ */
+function qualtricsxm_get_base_url() {
+  $settings = \Drupal::config('qualtricsxm.settings');
+  $secure_embed = $settings->get('qualtricsxm_secure_embed') ? "https://" : "http://";
+  $org_id = $settings->get('qualtricsxm_organization_id');
+  $datacenter = $settings->get("qualtricsxm_datacenter");
+  $data_url_path = $org_id ? $org_id : $datacenter;
+
+  return $secure_embed . ($datacenter ? trim($data_url_path) . ".qualtrics.com/jfe/form" : 'survey.qualtrics.com/jfe/form');
+}
+
+/**
+ * Help function to get the survey responseCounts.
+ *
+ * @param string $survey_id
+ *   ID of the survey to be loaded.
+ *
+ * @return bool|string
+ *   FALSE|Json
+ */
+function qualtricsxm_count_survey_submissions($survey_id) {
+  // Invoke getResponseData API.
+  $qualtrics = qualtricsxm_static();
+  $response_counts = $qualtrics->getSubmissions($survey_id);
+
+  return $response_counts;
+}
+
+/**
+ * Retrieving the list of surveys from Qualtrics.
+ *
+ * @return array
+ *   List of surveys in array format.
+ */
+function qualtricsxm_get_surveys() {
+  if ($cache = \Drupal::cache()->get('qualtrics_surveys_list_cache')) {
+    $surveys = $cache->data;
+  }
+  else {
+    $qualtrics = qualtricsxm_static();
+    $surveys = $qualtrics->getSurveyList();
+
+    if (!empty($surveys)) {
+      foreach ($surveys as $key => $survey) {
+        $id = $survey['id'];
+        $submissions = $qualtrics->getSubmissions($id);
+        $surveys[$key]['id'] = \Drupal\Core\Link::createFromRoute($id, 'qualtricsxm.survey_page', ['survey_id' => $id]);
+        $surveys[$key]['auditable'] = empty($submissions->auditable) ? NULL : $submissions->auditable;
+        $surveys[$key]['generated'] = empty($submissions->generated) ? NULL : $submissions->generated;
+        $surveys[$key]['deleted'] = empty($submissions->deleted) ? NULL : $submissions->deleted;
+      }
+      \Drupal::cache()
+        ->set('qualtrics_surveys_list_cache', $surveys, time() + 60 * 60 * 4);
+    }
+  }
+  return $surveys;
+}
+
+/**
+ * Helper function get survey by Qualtrics Survey ID.
+ */
+function qualtricsxm_get_survey($survey_id) {
+  $qualtrics = qualtricsxm_static();
+  $survey = $qualtrics->getSurvey($survey_id);
+
+  return $survey;
+}
+
+/**
+ * Helper function get surveys list table.
+ */
+function qualtricsxm_get_survey_list_table() {
+
+  $surveys = qualtricsxm_get_surveys();
+
+  if ($surveys === FALSE) {
+    return [
+      '#markup' => 'Qualtrics not connected.',
+    ];
+  }
+
+  $table = [
+    '#theme' => 'table',
+    '#header' => [
+      t('Name'),
+      t('Survey ID'),
+      t('User ID'),
+      t('Last Updated'),
+      t('is Active'),
+      t('Auditable'),
+      t('Generated'),
+      t('Deleted'),
+    ],
+    '#rows' => $surveys,
+    '#cache' => [
+      // 4 Hours.
+      'max-age' => 60 * 60 * 4,
+    ],
+  ];
+
+  return $table;
+}

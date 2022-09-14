@@ -1,0 +1,5 @@
+qualtricsxm.config_settings:
+  route_name: qualtricsxm.config_settings
+  title: 'QualtricsXM settings'
+  description: 'Settings for the third-party survey embedding from Qualtrics.'
+  parent: system.admin_config_content

@@ -1,0 +1,10 @@
+name: QualtricsXM Insights
+description: 'Adds the ability to integrate with Website / App Feedback.'
+package: Qualtricsxm
+core_version_requirement: ^8.8 || ^9
+type: module
+
+# Information added by Drupal.org packaging script on 2021-04-28
+version: '8.x-1.4'
+project: 'qualtricsxm'
+datestamp: 1619645950

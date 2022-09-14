@@ -1,0 +1,9 @@
+services:
+  qualtricsxm_insights.attachment:
+    class: Drupal\qualtricsxm_insights\AttachService
+    arguments:
+      - '@current_user'
+      - '@path.matcher'
+      - '@path.current'
+      - '@path_alias.manager'
+      - '@state'

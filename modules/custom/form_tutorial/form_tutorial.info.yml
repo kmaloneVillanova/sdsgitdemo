@@ -1,0 +1,6 @@
+name: Form Tutorial Module
+description: This is the module from drupal.org form tutorial.
+package: Custom
+
+type: module
+core_version_requirement: ^8.8 || ^9

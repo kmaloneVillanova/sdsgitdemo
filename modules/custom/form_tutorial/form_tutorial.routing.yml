@@ -1,0 +1,7 @@
+form_tutorial.form:
+  path: '/form_tutorial'
+  defaults:
+    _form: '\Drupal\form_tutorial\Form\FormTutorialForm'
+    _title: 'Form Tutorial'
+  requirements:
+    _permission: 'access content'

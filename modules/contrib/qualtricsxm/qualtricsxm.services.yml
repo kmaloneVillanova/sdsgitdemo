@@ -1,0 +1,6 @@
+services:
+  qualtricsxm.qualtricsxm:
+    class: Drupal\qualtricsxm\Qualtricsxm
+    arguments:
+      - 'https://survey.qualtrics.com/API/v3/'
+      - '@config.factory'

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "562b32f689c2ece1649aeb3c21d6bd11",
+    "content-hash": "0100c00959c4368a0178184674a14cb1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -531,7 +531,7 @@
         },
         {
             "name": "drupal/core",
-            "version": "9.3.17",
+            "version": "9.5.x-dev",
             "dist": {
                 "type": "path",
                 "url": "core",
@@ -788,7 +788,7 @@
         },
         {
             "name": "drupal/core-project-message",
-            "version": "9.3.17",
+            "version": "9.5.x-dev",
             "dist": {
                 "type": "path",
                 "url": "composer/Plugin/ProjectMessage",
@@ -821,7 +821,7 @@
         },
         {
             "name": "drupal/core-vendor-hardening",
-            "version": "9.3.17",
+            "version": "9.5.x-dev",
             "dist": {
                 "type": "path",
                 "url": "composer/Plugin/VendorHardening",
@@ -850,6 +850,62 @@
             ],
             "transport-options": {
                 "relative": true
+            }
+        },
+        {
+            "name": "drupal/qualtricsxm",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/qualtricsxm.git",
+                "reference": "8.x-1.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/qualtricsxm-8.x-1.4.zip",
+                "reference": "8.x-1.4",
+                "shasum": "cf77a373151b3519b23ef93418a8d1ab5d3b6bf1"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.4",
+                    "datestamp": "1619645948",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "-FvP-",
+                    "homepage": "https://www.drupal.org/user/3552981"
+                },
+                {
+                    "name": "marblegravy",
+                    "homepage": "https://www.drupal.org/user/113092"
+                },
+                {
+                    "name": "neclimdul",
+                    "homepage": "https://www.drupal.org/user/48673"
+                },
+                {
+                    "name": "yi_jiang",
+                    "homepage": "https://www.drupal.org/user/2082768"
+                }
+            ],
+            "description": "Qualtrics eXperience Management.",
+            "homepage": "https://www.drupal.org/project/qualtricsxm",
+            "support": {
+                "source": "https://git.drupalcode.org/project/qualtricsxm"
             }
         },
         {
@@ -8025,7 +8081,11 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "drupal/core": 20,
+        "drupal/core-project-message": 20,
+        "drupal/core-vendor-hardening": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

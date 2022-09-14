@@ -1,0 +1,28 @@
+qualtricsxm_insights.overview:
+  path: '/admin/config/content/qualtricsxm/insights'
+  defaults:
+    _controller: '\Drupal\qualtricsxm_insights\Controller\InsightAdmin::index'
+    _title: 'QualtricsXM Insights'
+  requirements:
+    _permission: 'administer qualtricsxm insights'
+qualtricsxm_insights.add:
+  path: '/admin/config/content/qualtricsxm/insights/add'
+  defaults:
+    _form: 'Drupal\qualtricsxm_insights\Form\AddInsight'
+    _title: 'QualtricsXM Insights'
+  requirements:
+    _permission: 'administer qualtricsxm insights'
+qualtricsxm_insights.edit:
+  path: '/admin/config/content/qualtricsxm/{id}/edit'
+  defaults:
+    _form: 'Drupal\qualtricsxm_insights\Form\EditInsight'
+    _title: 'QualtricsXM Insights'
+  requirements:
+    _permission: 'administer qualtricsxm insights'
+qualtricsxm_insights.delete:
+  path: '/admin/config/content/qualtricsxm/{id}/delete'
+  defaults:
+    _form: 'Drupal\qualtricsxm_insights\Form\DeleteInsight'
+    _title: 'QualtricsXM Insights'
+  requirements:
+    _permission: 'administer qualtricsxm insights'

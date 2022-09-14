@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Update hooks for the qualitricsxm_insights module.
+ */
+
+/**
+ * Convert blacklist config.
+ */
+function qualtricsxm_insights_update_8001() {
+  $state = \Drupal::state();
+  $list = $state->get(QUALTRICSXM_INSIGHTS_STATE_KEY) ?: [];
+
+  foreach ($list as $k => $insight) {
+    if (isset($list[$k]['blacklist'])) {
+      $list[$k]['exclude'] = $list[$k]['blacklist'];
+      unset($list[$k]['blacklist']);
+    }
+  }
+  $state->set(QUALTRICSXM_INSIGHTS_STATE_KEY, $list);
+}

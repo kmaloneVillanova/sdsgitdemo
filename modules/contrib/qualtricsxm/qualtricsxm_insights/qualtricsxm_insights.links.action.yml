@@ -1,0 +1,5 @@
+qualtricsxm_insights.add:
+  route_name: qualtricsxm_insights.add
+  title: 'Add Insight'
+  appears_on:
+    - qualtricsxm_insights.overview

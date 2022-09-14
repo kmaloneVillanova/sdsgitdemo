@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Insights module
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Key used for storing insights.
+ */
+const QUALTRICSXM_INSIGHTS_STATE_KEY = 'qualtricsxm_insights';
+
+/**
+ * Implements hook_help().
+ */
+function qualtricsxm_insights_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.qualtricsxm_insights':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Integrate Qualtrics Insights') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function qualtricsxm_insights_page_attachments(array &$page) {
+  \Drupal::service('qualtricsxm_insights.attachment')->pageAttachments($page);
+}
